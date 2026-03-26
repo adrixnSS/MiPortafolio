@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Terminal, Code2, BrainCircuit, Rocket } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const AboutMe = () => {
+  const { t } = useTranslation();
   return (
     <section id="about" className="py-32 bg-slate-950 relative overflow-hidden border-t border-slate-900/50">
       {/* Background Elements */}
@@ -22,14 +24,16 @@ export const AboutMe = () => {
             className="relative"
           >
             <div className="relative rounded-3xl overflow-hidden border border-slate-800 bg-slate-900 aspect-square md:aspect-[4/5] shadow-2xl group">
-              {/* Placeholder for actual image - using a tech-themed placeholder for now */}
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-950 flex flex-col items-center justify-center text-slate-500">
-                <Terminal className="w-24 h-24 mb-4 opacity-20 group-hover:opacity-40 transition-opacity duration-500" />
-                <span className="font-mono text-sm tracking-widest uppercase opacity-50 text-center px-4">
-                  [ Espacio reservado para foto de estudio ]<br/>
-                  <span className="text-xs opacity-70 mt-2 block">Reemplazar con imagen real en el dominio final</span>
-                </span>
-              </div>
+              <img 
+                src="/profile.jpg" 
+                alt="Adrián Sánchez Simón" 
+                className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.onerror = null;
+                  target.src = "https://picsum.photos/seed/adrian/800/1000";
+                }}
+              />
               
               {/* Overlay Effects */}
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent opacity-80"></div>
@@ -74,37 +78,37 @@ export const AboutMe = () => {
             </div>
             
             <h2 className="text-4xl md:text-5xl font-black text-white mb-8 tracking-tight leading-tight">
-              Transformando <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">Lógica</span> en Experiencias.
+              {t('about.title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-violet-500">{t('about.title_highlight')}</span> {t('about.title_2')}
             </h2>
 
             <div className="space-y-6 text-slate-400 text-lg leading-relaxed font-light">
               <p>
-                No solo escribo código; diseño sistemas. Mi enfoque se basa en la intersección entre la ingeniería de software rigurosa y la creatividad sin límites. Creo firmemente que las mejores soluciones tecnológicas son aquellas que, además de ser eficientes, resultan intuitivas y cautivadoras para el usuario.
+                {t('about.p1')}
               </p>
               
               <div className="pl-6 border-l-2 border-cyan-500/30 py-2 my-8">
                 <p className="text-slate-300 italic">
-                  "Mi ambición no es solo resolver problemas complejos, sino hacerlo de una manera que parezca magia."
+                  "{t('about.quote')}"
                 </p>
               </div>
 
               <p>
-                Busco constantemente desafiar los límites de lo posible en el desarrollo web y de software. Mi objetivo a largo plazo es liderar proyectos que tengan un impacto real, combinando arquitecturas escalables con interfaces que enganchen desde el primer clic.
+                {t('about.p2')}
               </p>
             </div>
 
             <div className="mt-10 grid grid-cols-2 gap-6">
               <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
                 <h4 className="text-white font-bold mb-2 flex items-center gap-2">
-                  <Rocket className="w-4 h-4 text-violet-400" /> Visión
+                  <Rocket className="w-4 h-4 text-violet-400" /> {t('about.vision.title')}
                 </h4>
-                <p className="text-sm text-slate-500">Crear productos digitales que destaquen por su rendimiento y diseño.</p>
+                <p className="text-sm text-slate-500">{t('about.vision.desc')}</p>
               </div>
               <div className="bg-slate-900/50 p-4 rounded-xl border border-slate-800">
                 <h4 className="text-white font-bold mb-2 flex items-center gap-2">
-                  <Terminal className="w-4 h-4 text-cyan-400" /> Mindset
+                  <Terminal className="w-4 h-4 text-cyan-400" /> {t('about.mindset.title')}
                 </h4>
-                <p className="text-sm text-slate-500">Aprendizaje continuo, adaptabilidad y obsesión por el detalle.</p>
+                <p className="text-sm text-slate-500">{t('about.mindset.desc')}</p>
               </div>
             </div>
           </motion.div>

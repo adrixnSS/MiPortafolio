@@ -3,11 +3,13 @@ import { motion, AnimatePresence, useMotionTemplate, useMotionValue } from 'fram
 import confetti from 'canvas-confetti';
 import { useGame, PROJECTS_DB, Project } from '../store/GameContext';
 import { Github, ExternalLink, Gamepad2, Sparkles, X, ChevronDown, Lock, Cpu } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 // Holographic Card Component for the Showcase
 const ProjectCard = ({ project, key }: { project: Project, key?: string }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
+  const { t } = useTranslation();
 
   function handleMouseMove({ currentTarget, clientX, clientY }: React.MouseEvent) {
     const { left, top } = currentTarget.getBoundingClientRect();
@@ -49,9 +51,9 @@ const ProjectCard = ({ project, key }: { project: Project, key?: string }) => {
           </span>
         </div>
         
-        <h4 className="text-2xl font-black text-white mb-2 tracking-tight">{project.title}</h4>
+        <h4 className="text-2xl font-black text-white mb-2 tracking-tight">{t(`projects.${project.id}.title`, { defaultValue: project.title })}</h4>
         <p className="text-slate-400 text-sm leading-relaxed mb-6 line-clamp-3">
-          {project.description}
+          {t(`projects.${project.id}.desc`, { defaultValue: project.description })}
         </p>
       </div>
 
@@ -71,7 +73,7 @@ const ProjectCard = ({ project, key }: { project: Project, key?: string }) => {
             rel="noopener noreferrer"
             className="flex-1 flex items-center justify-center gap-2 py-2 bg-slate-950 hover:bg-black text-slate-300 hover:text-white rounded-lg text-xs font-bold transition-colors border border-slate-800"
           >
-            <Github className="w-4 h-4" /> Code
+            <Github className="w-4 h-4" /> {t('machine.code')}
           </a>
           <a 
             href={project.url} 
@@ -79,7 +81,7 @@ const ProjectCard = ({ project, key }: { project: Project, key?: string }) => {
             rel="noopener noreferrer"
             className={`flex-1 flex items-center justify-center gap-2 py-2 bg-gradient-to-r ${project.color} text-white rounded-lg text-xs font-bold transition-all hover:brightness-110 shadow-lg`}
           >
-            <ExternalLink className="w-4 h-4" /> Live
+            <ExternalLink className="w-4 h-4" /> {t('machine.live')}
           </a>
         </div>
       </div>
@@ -89,6 +91,7 @@ const ProjectCard = ({ project, key }: { project: Project, key?: string }) => {
 
 export const ProjectMachine = () => {
   const { coins, unlockedProjects, playMachine } = useGame();
+  const { t } = useTranslation();
   
   // Machine States
   const [isPlaying, setIsPlaying] = useState(false);
@@ -182,10 +185,10 @@ export const ProjectMachine = () => {
             viewport={{ once: true }}
             className="text-4xl md:text-6xl font-black text-white mb-6 tracking-tight"
           >
-            Mis <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500">Proyectos</span>
+            {t('machine.title')}
           </motion.h2>
           <p className="text-slate-400 text-lg max-w-2xl mx-auto font-light">
-            Invierte tus monedas para extraer cápsulas de datos. Cada cápsula contiene un proyecto real desarrollado por mí.
+            {t('machine.desc')}
           </p>
         </div>
 
@@ -202,8 +205,8 @@ export const ProjectMachine = () => {
               {/* Top Sign */}
               <div className="w-full h-16 bg-slate-950 rounded-xl border border-slate-800 mb-5 flex items-center justify-center relative overflow-hidden shadow-inner">
                 <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(6,182,212,0.05)_50%,transparent_75%)] bg-[length:20px_20px] animate-[slide_2s_linear_infinite]"></div>
-                <h3 className={`font-black text-2xl tracking-[0.2em] z-10 ${isSoldOut ? 'text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.8)]' : isPlaying ? 'text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]' : 'text-slate-300'}`}>
-                  {isSoldOut ? 'DEPLETED' : isPlaying ? 'EXTRACTING...' : 'INSERT COIN'}
+                <h3 className={`font-black text-xl md:text-2xl tracking-[0.2em] z-10 ${isSoldOut ? 'text-red-500 drop-shadow-[0_0_8px_rgba(239,68,68,0.8)]' : isPlaying ? 'text-cyan-400 drop-shadow-[0_0_8px_rgba(6,182,212,0.8)]' : 'text-slate-300'}`}>
+                  {isSoldOut ? t('machine.depleted') : isPlaying ? t('machine.extracting') : t('machine.insert_coin')}
                 </h3>
               </div>
 
@@ -283,7 +286,7 @@ export const ProjectMachine = () => {
                 {isSoldOut && (
                   <div className="absolute inset-0 flex items-center justify-center">
                     <div className="text-slate-800 font-black text-5xl rotate-[-15deg] border-4 border-slate-800 p-4 rounded-xl">
-                      EMPTY
+                      {t('machine.empty')}
                     </div>
                   </div>
                 )}
@@ -305,7 +308,7 @@ export const ProjectMachine = () => {
                   <div className="flex flex-col items-center gap-3">
                     <div className="bg-slate-900 px-4 py-1.5 rounded-md border border-slate-800 shadow-inner">
                       <span className={`font-mono text-xs font-bold tracking-wider ${coins >= 50 ? 'text-cyan-400 animate-pulse' : 'text-red-500'}`}>
-                        {coins >= 50 ? 'READY' : 'NO FUNDS'}
+                        {coins >= 50 ? t('machine.ready') : t('machine.no_funds')}
                       </span>
                     </div>
                     <button
@@ -314,12 +317,12 @@ export const ProjectMachine = () => {
                       className="w-20 h-20 rounded-full bg-slate-800 border-2 border-slate-600 shadow-[0_8px_0_rgb(51,65,85),0_15px_20px_rgba(0,0,0,0.4)] active:shadow-[0_0_0_rgb(51,65,85),0_0_0_rgba(0,0,0,0)] active:translate-y-[8px] transition-all disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center group relative overflow-hidden"
                     >
                       <div className="absolute inset-0 bg-gradient-to-b from-white/5 to-transparent"></div>
-                      <span className={`font-black text-lg tracking-wider drop-shadow-md ${coins >= 50 && !isSoldOut ? 'text-cyan-400 group-hover:text-cyan-300' : 'text-slate-500'}`}>
-                        EXTRACT
+                      <span className={`font-black text-xs md:text-sm tracking-wider drop-shadow-md ${coins >= 50 && !isSoldOut ? 'text-cyan-400 group-hover:text-cyan-300' : 'text-slate-500'}`}>
+                        {t('machine.extract')}
                       </span>
                     </button>
                     <span className="text-slate-400 font-mono text-xs flex items-center gap-1">
-                      COST: <span className="text-yellow-400 font-bold">50 ●</span>
+                      {t('machine.cost')} <span className="text-yellow-400 font-bold">50 ●</span>
                     </span>
                   </div>
                 </div>
@@ -333,17 +336,17 @@ export const ProjectMachine = () => {
             <div className="flex items-center justify-between border-b border-slate-800 pb-4">
               <h3 className="text-2xl font-bold text-white flex items-center gap-3">
                 <Sparkles className="text-cyan-400 w-6 h-6" />
-                Data Archive
+                {t('machine.archive')}
               </h3>
               <div className="text-sm font-mono text-slate-500">
-                Unlocked: <span className="text-cyan-400">{unlockedProjects.length}</span> / {PROJECTS_DB.length}
+                {t('machine.unlocked')} <span className="text-cyan-400">{unlockedProjects.length}</span> / {PROJECTS_DB.length}
               </div>
             </div>
             
             {unlockedProjects.length === 0 ? (
               <div className="h-64 border border-dashed border-slate-700/50 rounded-3xl flex flex-col items-center justify-center text-slate-500 font-mono bg-slate-900/20">
                 <Lock className="w-10 h-10 mb-4 opacity-50" />
-                <span>[ Archive Locked. Extract data to view. ]</span>
+                <span>[ {t('machine.locked')} ]</span>
               </div>
             ) : (
               <div className="grid sm:grid-cols-2 gap-6">
@@ -391,14 +394,14 @@ export const ProjectMachine = () => {
                     className="flex justify-center mb-8"
                   >
                     <span className="inline-flex items-center gap-2 px-4 py-1.5 bg-cyan-500/10 text-cyan-400 font-mono text-xs tracking-widest uppercase rounded-full border border-cyan-500/30">
-                      <Sparkles className="w-4 h-4" /> Data Extracted
+                      <Sparkles className="w-4 h-4" /> {t('machine.extracted')}
                     </span>
                   </motion.div>
                   
                   <div className="text-center mb-10">
-                    <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">{revealedProject.title}</h2>
+                    <h2 className="text-4xl md:text-5xl font-black text-white mb-6 tracking-tight">{t(`projects.${revealedProject.id}.title`, { defaultValue: revealedProject.title })}</h2>
                     <p className="text-slate-400 text-lg leading-relaxed max-w-xl mx-auto">
-                      {revealedProject.description}
+                      {t(`projects.${revealedProject.id}.desc`, { defaultValue: revealedProject.description })}
                     </p>
                   </div>
 
@@ -417,7 +420,7 @@ export const ProjectMachine = () => {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-3 px-8 py-4 bg-slate-900 hover:bg-slate-800 text-white rounded-xl font-bold transition-colors border border-slate-700 text-sm"
                     >
-                      <Github className="w-5 h-5" /> Source Code
+                      <Github className="w-5 h-5" /> {t('machine.code')}
                     </a>
                     <a 
                       href={revealedProject.url} 
@@ -425,7 +428,7 @@ export const ProjectMachine = () => {
                       rel="noopener noreferrer"
                       className={`flex items-center justify-center gap-3 px-8 py-4 bg-gradient-to-r ${revealedProject.color} text-white rounded-xl font-bold transition-all hover:brightness-110 shadow-lg text-sm`}
                     >
-                      <ExternalLink className="w-5 h-5" /> Live Demo
+                      <ExternalLink className="w-5 h-5" /> {t('machine.live')}
                     </a>
                   </div>
                 </div>

@@ -4,12 +4,14 @@ import confetti from 'canvas-confetti';
 import { useGame, Card as CardType } from '../store/GameContext';
 import { Card } from './Card';
 import { PackageOpen, X } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const PackOpener = () => {
   const { coins, buyPack } = useGame();
   const [isOpen, setIsOpen] = useState(false);
   const [revealedCard, setRevealedCard] = useState<CardType | null>(null);
   const [isAnimating, setIsAnimating] = useState(false);
+  const { t } = useTranslation();
 
   const handleOpenPack = () => {
     if (coins < 100) return;
@@ -50,7 +52,7 @@ export const PackOpener = () => {
         className="fixed bottom-6 right-6 z-40 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-full font-bold shadow-lg shadow-purple-500/30 hover:shadow-purple-500/50 hover:scale-105 transition-all flex items-center gap-2"
       >
         <PackageOpen className="w-5 h-5" />
-        Abrir Sobre (100 <span className="text-yellow-400">●</span>)
+        {t('pack.open_button')} (100 <span className="text-yellow-400">●</span>)
       </button>
 
       <AnimatePresence>
@@ -79,12 +81,12 @@ export const PackOpener = () => {
                     <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-30"></div>
                     <PackageOpen className="w-24 h-24 text-blue-300 mb-4 drop-shadow-lg group-hover:scale-110 transition-transform" />
                     <h2 className="text-2xl font-black text-white tracking-widest uppercase drop-shadow-md">Skill Pack</h2>
-                    <p className="text-blue-200 font-mono mt-2">Click to open</p>
+                    <p className="text-blue-200 font-mono mt-2">{t('pack.click_to_open')}</p>
                   </div>
                   
                   {coins < 100 && !isAnimating && (
                     <div className="absolute inset-0 bg-black/60 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                      <p className="text-red-400 font-bold text-lg bg-black/80 px-4 py-2 rounded-lg">Faltan Monedas</p>
+                      <p className="text-red-400 font-bold text-lg bg-black/80 px-4 py-2 rounded-lg">{t('pack.not_enough_coins')}</p>
                     </div>
                   )}
                 </motion.div>
@@ -96,7 +98,7 @@ export const PackOpener = () => {
                   className="flex flex-col items-center gap-8"
                 >
                   <h2 className="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-orange-500 drop-shadow-lg">
-                    ¡Nueva Habilidad!
+                    {t('pack.new_skill')}
                   </h2>
                   <div className="scale-150">
                     <Card card={revealedCard} />
@@ -105,7 +107,7 @@ export const PackOpener = () => {
                     onClick={() => setRevealedCard(null)}
                     className="mt-12 bg-white/10 hover:bg-white/20 text-white px-8 py-3 rounded-full font-bold backdrop-blur-md transition-colors"
                   >
-                    Abrir Otro
+                    {t('pack.open_another')}
                   </button>
                 </motion.div>
               )}

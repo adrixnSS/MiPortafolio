@@ -3,12 +3,14 @@ import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { Coffee, Atom, Database, GitBranch, Kanban, Layout, Network, Monitor, Flame, Crown } from 'lucide-react';
 import { Card as CardType } from '../store/GameContext';
 import { cn } from '../lib/utils';
+import { useTranslation } from 'react-i18next';
 
 const iconMap: Record<string, React.ElementType> = {
   Coffee, Atom, Database, GitBranch, Kanban, Layout, Network, Monitor, Flame, Crown
 };
 
 export const Card = ({ card, isRevealed = true, onClick }: { card: CardType, isRevealed?: boolean, onClick?: () => void }) => {
+  const { t } = useTranslation();
   const Icon = iconMap[card.icon] || Coffee;
   const cardRef = useRef<HTMLDivElement>(null);
   
@@ -71,8 +73,8 @@ export const Card = ({ card, isRevealed = true, onClick }: { card: CardType, isR
         <Icon className="w-16 h-16 text-white drop-shadow-lg" />
       </div>
       
-      <h3 className="text-white font-bold text-center text-sm mb-2" style={{ transform: "translateZ(40px)" }}>{card.title}</h3>
-      <p className="text-slate-400 text-xs text-center leading-tight" style={{ transform: "translateZ(20px)" }}>{card.description}</p>
+      <h3 className="text-white font-bold text-center text-sm mb-2" style={{ transform: "translateZ(40px)" }}>{t(`cards.${card.id}.title`, { defaultValue: card.title })}</h3>
+      <p className="text-slate-400 text-xs text-center leading-tight" style={{ transform: "translateZ(20px)" }}>{t(`cards.${card.id}.desc`, { defaultValue: card.description })}</p>
       
       <div className="absolute bottom-2 right-2" style={{ transform: "translateZ(10px)" }}>
         <span className={cn(

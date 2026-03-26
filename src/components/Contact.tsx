@@ -1,8 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Mail, MessageCircle, Send } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Contact = () => {
+  const { t } = useTranslation();
   return (
     <section id="contact" className="py-24 bg-slate-950 relative overflow-hidden border-t border-slate-900">
       {/* Background Effects */}
@@ -26,7 +28,7 @@ export const Contact = () => {
             viewport={{ once: true }}
             className="text-4xl md:text-6xl font-black text-white mb-4 tracking-tight"
           >
-            ¿Hablamos?
+            {t('contact.title')}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -35,7 +37,7 @@ export const Contact = () => {
             transition={{ delay: 0.1 }}
             className="text-slate-400 text-lg max-w-2xl mx-auto"
           >
-            Si te ha gustado lo que has visto y buscas un desarrollador FullStack apasionado, resolutivo y con ganas de aportar valor, no dudes en contactarme.
+            {t('contact.desc')}
           </motion.p>
         </div>
 
@@ -59,7 +61,7 @@ export const Contact = () => {
                 <MessageCircle className="w-8 h-8" />
               </div>
               <h3 className="text-2xl font-bold text-white mb-2">WhatsApp</h3>
-              <p className="text-slate-400 mb-6">Respuesta rápida. Ideal para una primera toma de contacto o dudas urgentes.</p>
+              <p className="text-slate-400 mb-6">{t('contact.whatsapp.desc')}</p>
               <span className="text-green-400 font-mono font-bold text-lg bg-green-500/10 px-4 py-2 rounded-lg border border-green-500/20">
                 +34 651 457 733
               </span>
@@ -82,8 +84,8 @@ export const Contact = () => {
               <div className="w-16 h-16 bg-blue-500/20 rounded-2xl flex items-center justify-center mb-6 text-blue-400 group-hover:scale-110 group-hover:bg-blue-500 group-hover:text-white transition-all duration-300">
                 <Mail className="w-8 h-8" />
               </div>
-              <h3 className="text-2xl font-bold text-white mb-2">Email</h3>
-              <p className="text-slate-400 mb-6">Para propuestas formales, ofertas de trabajo o detalles extensos sobre proyectos.</p>
+              <h3 className="text-2xl font-bold text-white mb-2">{t('contact.email')}</h3>
+              <p className="text-slate-400 mb-6">{t('contact.email.desc')}</p>
               <span className="text-blue-400 font-mono font-bold text-sm sm:text-base bg-blue-500/10 px-4 py-2 rounded-lg border border-blue-500/20 break-all">
                 sanchezsimonadrian@gmail.com
               </span>

@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useGame } from '../store/GameContext';
 import { ChevronDown, Terminal } from 'lucide-react';
+import { useTranslation } from 'react-i18next';
 
 export const Hero = () => {
   const { addCoins } = useGame();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const { t } = useTranslation();
 
   // Add coins on scroll
   useEffect(() => {
@@ -38,9 +40,18 @@ export const Hero = () => {
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
           transition={{ type: "spring", stiffness: 200, damping: 20 }}
-          className="w-24 h-24 mx-auto mb-8 bg-blue-500/10 rounded-2xl flex items-center justify-center border border-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.3)]"
+          className="w-32 h-32 mx-auto mb-8 rounded-full flex items-center justify-center border-4 border-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.3)] overflow-hidden bg-slate-800"
         >
-          <Terminal className="w-12 h-12 text-blue-400" />
+          <img 
+            src="/profile.jpg" 
+            alt="Adrián Sánchez Simón" 
+            className="w-full h-full object-cover"
+            onError={(e) => {
+              const target = e.target as HTMLImageElement;
+              target.onerror = null;
+              target.src = "https://picsum.photos/seed/adrian/200/200";
+            }}
+          />
         </motion.div>
 
         <motion.h1 
@@ -49,7 +60,7 @@ export const Hero = () => {
           transition={{ delay: 0.2 }}
           className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight"
         >
-          Adrián Sánchez Simón
+          {t('hero.name')}
         </motion.h1>
         
         <motion.h2 
@@ -58,7 +69,7 @@ export const Hero = () => {
           transition={{ delay: 0.3 }}
           className="text-2xl md:text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-cyan-300 mb-8"
         >
-          Desarrollador FullStack
+          {t('hero.role')}
         </motion.h2>
 
         <motion.p 
@@ -67,8 +78,7 @@ export const Hero = () => {
           transition={{ delay: 0.4 }}
           className="text-lg md:text-xl text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed"
         >
-          Especializado en crear soluciones escalables con Java, SpringBoot y React. 
-          Explora mi portfolio, caza bugs, colecciona mis habilidades y descubre mi experiencia.
+          {t('hero.description')}
         </motion.p>
 
         <motion.div 
@@ -78,10 +88,10 @@ export const Hero = () => {
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <a href="#experience" className="px-8 py-4 bg-blue-600 hover:bg-blue-500 text-white rounded-full font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(59,130,246,0.5)]">
-            Ver Experiencia
+            {t('hero.btn.experience')}
           </a>
           <a href="#collection" className="px-8 py-4 bg-slate-800 hover:bg-slate-700 text-white rounded-full font-bold transition-all border border-slate-700 hover:border-slate-500">
-            Mi Colección
+            {t('hero.btn.collection')}
           </a>
         </motion.div>
       </motion.div>

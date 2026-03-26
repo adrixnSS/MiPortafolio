@@ -2,9 +2,11 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { useGame, CARDS_DB } from '../store/GameContext';
 import { Card } from './Card';
+import { useTranslation } from 'react-i18next';
 
 export const CardBinder = () => {
   const { collectedCards, hasCollectedAll } = useGame();
+  const { t } = useTranslation();
 
   return (
     <section id="collection" className="py-24 bg-slate-950 relative min-h-screen">
@@ -16,7 +18,7 @@ export const CardBinder = () => {
             viewport={{ once: true }}
             className="text-4xl md:text-5xl font-black text-white mb-4"
           >
-            Mi Colección de Habilidades
+            {t('collection.title')}
           </motion.h2>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -25,8 +27,7 @@ export const CardBinder = () => {
             transition={{ delay: 0.1 }}
             className="text-slate-400 text-lg max-w-2xl mx-auto"
           >
-            ¡Atrapa bugs, gana monedas y abre sobres para descubrir mi stack tecnológico! 
-            Colecciona las {CARDS_DB.length} cartas para desbloquear mi contacto.
+            {t('collection.desc', { count: CARDS_DB.length })}
           </motion.p>
         </div>
 
@@ -54,10 +55,10 @@ export const CardBinder = () => {
             className="mt-24 p-8 bg-gradient-to-r from-yellow-500/20 via-amber-500/20 to-yellow-500/20 border border-yellow-500/50 rounded-2xl text-center shadow-[0_0_50px_rgba(234,179,8,0.3)] backdrop-blur-md"
           >
             <h3 className="text-3xl font-black text-yellow-400 mb-4 uppercase tracking-widest">
-              ¡Colección Completada!
+              {t('collection.completed')}
             </h3>
             <p className="text-white text-lg mb-8">
-              Has demostrado ser un verdadero cazador de talento. ¡Hablemos!
+              {t('collection.completed_desc')}
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <a href="mailto:sanchezsimonadrian@gmail.com" className="px-8 py-4 bg-yellow-500 hover:bg-yellow-400 text-slate-900 rounded-full font-bold transition-all hover:scale-105 shadow-lg">
