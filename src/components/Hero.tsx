@@ -43,7 +43,7 @@ export const Hero = () => {
           className="w-32 h-32 mx-auto mb-8 rounded-full flex items-center justify-center border-4 border-blue-500/30 shadow-[0_0_30px_rgba(59,130,246,0.3)] overflow-hidden bg-slate-800"
         >
           <img 
-            src="/profile.jpg" 
+            src="/hero_profile.jpg" 
             alt="Adrián Sánchez Simón" 
             className="w-full h-full object-cover"
             onError={(e) => {

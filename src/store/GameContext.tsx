@@ -70,6 +70,15 @@ export const PROJECTS_DB: Project[] = [
     github: '#',
     tags: ['PWA', 'Firebase', 'Geolocation', 'React'],
     color: 'from-green-400 to-emerald-600'
+  },
+  {
+    id: 'p5',
+    title: 'Interactive Portfolio',
+    description: 'Un portafolio gamificado e interactivo construido con React, Framer Motion y Tailwind CSS. Cuenta con mini-juegos, coleccionables y una experiencia de usuario única.',
+    url: 'https://github.com/adrixnSS/MiPortafolio',
+    github: 'https://github.com/adrixnSS/MiPortafolio',
+    tags: ['React', 'Framer Motion', 'Tailwind', 'Gamification'],
+    color: 'from-cyan-400 to-blue-600'
   }
 ];
 

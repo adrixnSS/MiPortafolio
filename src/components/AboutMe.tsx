@@ -25,7 +25,7 @@ export const AboutMe = () => {
           >
             <div className="relative rounded-3xl overflow-hidden border border-slate-800 bg-slate-900 aspect-square md:aspect-[4/5] shadow-2xl group">
               <img 
-                src="/profile.jpg" 
+                src="/about_profile.jpg" 
                 alt="Adrián Sánchez Simón" 
                 className="w-full h-full object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-500"
                 onError={(e) => {
